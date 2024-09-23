@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<head>
+    <title>products app</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <div class="row">
+        <div class="col">
+            <h1>Create product</h1>
+            <div id="wrongInput" class="row alert alert-danger"></div>
+            <div id="successInput" class="row alert alert-success">Product created</div>
+            <form id="productCreateForm" class="needs-validation" novalidate>
+                <div class="container">
+                    <div class="row py-4">
+                        <label class="form-label" for="name">product name:</label>
+                        <div id="nameInputContainer" class="input-group has-validation">
+                            <input type="text" name="name" id="name" class="form-control" required />
+                            <div id="nameError" class="invalid-feedback"></div>
+                        </div>
+                    </div>
+
+                    <div class="row py-4">
+                        <label class="form-label" for="price">product price:</label>
+                        <div id="priceInputContainer" class="input-group has-validation">
+                            <input type="number" min="1" max="1000000" name="price" id="price" step="0.1" required />
+                            <div id="priceError" class="invalid-feedback"></div>
+                        </div>
+                    </div>
+
+                    <div class="row py-4">
+                        <label for="description">product description:</label>
+                        <textarea name="description"></textarea>
+                    </div>
+
+                    <div class="row py-4">
+                        <input class="btn btn-primary" type="submit" value="create" onclick="createProduct()"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col">
+            <h1>Products table</h1>
+            <table class="table" id="productsTable">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">name</th>
+                        <th scope="col">price</th>
+                        <th scope="col">description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item"><a id="prev" class="page-link" href="#">Previous</a></li>
+                  <li class="page-item"><a id="next" class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+        <script src="./index.js"></script>
+    </div>
+</body>
