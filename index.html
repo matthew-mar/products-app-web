@@ -7,16 +7,24 @@
     <div class="row">
         <div class="col">
             <h1>Create product</h1>
-            <form>
+            <div id="wrongInput" class="row alert alert-danger"></div>
+            <div id="successInput" class="row alert alert-success">Product created</div>
+            <form id="productCreateForm" class="needs-validation" novalidate>
                 <div class="container">
                     <div class="row py-4">
-                        <label for="name">product name:</label>
-                        <input type="text" name="name" id="name" required />
+                        <label class="form-label" for="name">product name:</label>
+                        <div id="nameInputContainer" class="input-group has-validation">
+                            <input type="text" name="name" id="name" class="form-control" required />
+                            <div id="nameError" class="invalid-feedback"></div>
+                        </div>
                     </div>
 
                     <div class="row py-4">
-                        <label for="price">product price:</label>
-                        <input type="number" min="1" max="1000000" name="price" id="price" step="0.1" required />
+                        <label class="form-label" for="price">product price:</label>
+                        <div id="priceInputContainer" class="input-group has-validation">
+                            <input type="number" min="1" max="1000000" name="price" id="price" step="0.1" required />
+                            <div id="priceError" class="invalid-feedback"></div>
+                        </div>
                     </div>
 
                     <div class="row py-4">
@@ -25,10 +33,11 @@
                     </div>
 
                     <div class="row py-4">
-                        <input type="submit" value="create" />
+                        <input class="btn btn-primary" type="submit" value="create" onclick="createProduct()"/>
                     </div>
                 </div>
             </form>
+            <script src="./index.js"></script>
         </div>
 
         <div class="col">
