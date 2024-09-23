@@ -1,8 +1,66 @@
+let offset = 1;
+let totalCount = 0;
+const onPage = 3;
+
+const fetchProducts = async (ofst) => {
+    const response = await fetch(`http://localhost:8000/products?offset=${ofst}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        
+    })
+
+    if (response.ok) {
+        return await response.json();
+    } else {
+        console.error("failed get response");
+    }
+}
+
+const loadProducts = async (ofst) => {
+    const products = await fetchProducts(ofst);
+
+    const tableBody = document.querySelector('#productsTable tbody');
+    tableBody.innerHTML = "";
+
+    totalCount = products.count;
+
+    for (let product of products.results) {
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+            <th scope="row">${product.id}</th>
+            <td>${product.name}</td>
+            <td>${product.price}</td>
+            <td>${product.description}</td>
+        `;
+        tableBody.appendChild(newRow);
+    }
+};
+
+window.onload = loadProducts;
+
 document.getElementById('wrongInput').style.display = 'none';
 document.getElementById('successInput').style.display = 'none';
 
 document.getElementById('productCreateForm').addEventListener('submit', async function(event) {
     event.preventDefault();
+});
+
+document.getElementById('prev').addEventListener('click', function(event) {
+    event.preventDefault();
+    if (offset > 1) {
+        offset--;
+        loadProducts(offset);
+    }
+});
+
+document.getElementById('next').addEventListener('click', function(event) {
+    event.preventDefault();
+    if (offset < totalCount - 1) {
+        offset++;
+        loadProducts(offset);
+    }
 });
 
 const fetchCreateProduct = async (data) => {
@@ -63,12 +121,12 @@ const fetchCreateProduct = async (data) => {
 };
 
 
-
-
 const createProduct = async () => {
     const form = document.getElementById("productCreateForm");
     const formData = new FormData(form);
     const data = {};
     formData.forEach((value, key) => (data[key] = value));
     await fetchCreateProduct(data);
+    offset = totalCount - 2;
+    await loadProducts(offset);
 };
